@@ -1,0 +1,41 @@
+version: '3.9'
+
+# Development Docker Compose
+# Provides supporting services only. Apps run on the host with pnpm dev.
+
+services:
+  # MongoDB (local dev alternative to Atlas)
+  mongo:
+    image: mongo:7.0
+    container_name: travel_mongo_dev
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: travel_marketplace
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Mongo Express (UI for local development)
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: travel_mongo_express
+    restart: unless-stopped
+    ports:
+      - '8081:8081'
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo_data:
+    driver: local

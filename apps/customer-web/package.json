@@ -1,0 +1,17 @@
+{
+  "name": "@travel/customer-web",
+  "version": "0.1.0",
+  "description": "Customer-Facing Website (placeholder)",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Customer web not yet implemented'",
+    "build": "echo 'Customer web not yet implemented'",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'No source files'",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.5"
+  }
+}

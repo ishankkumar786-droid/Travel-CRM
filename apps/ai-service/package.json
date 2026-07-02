@@ -1,0 +1,17 @@
+{
+  "name": "@travel/ai-service",
+  "version": "0.1.0",
+  "description": "AI Microservice (placeholder)",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'AI service not yet implemented'",
+    "build": "echo 'AI service not yet implemented'",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'No source files'",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.5"
+  }
+}
