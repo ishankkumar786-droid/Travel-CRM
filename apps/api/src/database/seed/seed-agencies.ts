@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
+
 import { env } from '@/config/env';
 
 async function seedAgencies() {

@@ -8,3 +8,5 @@ pnpm-lock.yaml
 *.min.js
 *.min.css
 .husky
+
+apps/api/logs/

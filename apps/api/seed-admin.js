@@ -19,7 +19,9 @@ mongoose
   .then(async () => {
     console.log('Connected to MongoDB');
 
-    const existing = await mongoose.connection.db.collection('users').findOne({ email: 'admin@travel.com' });
+    const existing = await mongoose.connection.db
+      .collection('users')
+      .findOne({ email: 'admin@travel.com' });
     if (existing) {
       console.log('Admin already exists: admin@travel.com');
       process.exit(0);
