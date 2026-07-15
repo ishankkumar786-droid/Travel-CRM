@@ -1,9 +1,10 @@
-import type { Request, Response } from 'express';
-import { asyncHandler } from '../utils/asyncHandler';
-import { uploadImage } from '../services/cloudinary.service';
 import { AppError } from '../errors/AppError';
+import { uploadImage } from '../services/cloudinary.service';
+import { asyncHandler } from '../utils/asyncHandler';
 
-export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
+import type { Request, Response, RequestHandler } from 'express';
+
+export const uploadFile: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
   if (!req.file) {
     throw new AppError(400, 'BAD_REQUEST', 'No file uploaded');
   }
