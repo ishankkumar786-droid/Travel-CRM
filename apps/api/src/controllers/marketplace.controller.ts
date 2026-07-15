@@ -184,9 +184,18 @@ export const publicApiController = {
       ...(q['minBudget'] && { minBudget: Number(q['minBudget']) }),
       ...(q['maxBudget'] && { maxBudget: Number(q['maxBudget']) }),
       ...(q['sortBy'] && { sortBy: q['sortBy'] }),
+      ...(q['agencyId'] && { agencyId: q['agencyId'] }),
       featured: q['featured'] === 'true',
     });
     sendPaginated(res, result.items as never[], result.pagination, 'Public packages');
+  },
+  async getPublicPackage(req: Request, res: Response): Promise<void> {
+    const pkg = await publicApiService.getPublicPackage(req.params['slugOrId'] as string);
+    if (!pkg) {
+      res.status(404).json({ success: false, message: 'Package not found' });
+      return;
+    }
+    sendSuccess(res, pkg, 'Public package details');
   },
   async listDestinations(req: Request, res: Response): Promise<void> {
     const { type, featured } = req.query as Record<string, string | undefined>;

@@ -22,6 +22,7 @@ export interface IPackage {
   terms?: string | undefined;
   gallery: string[];
   coverImage?: string | undefined;
+  itinerary: Array<{ day: number; title: string; description: string }>;
   hotelCategory?: string | undefined;
   meals?: string | undefined;
   transport?: string | undefined;
@@ -60,6 +61,14 @@ const packageSchema = new Schema<IPackage>(
     terms: { type: String, trim: true },
     gallery: [{ type: String }],
     coverImage: { type: String },
+    itinerary: [
+      {
+        _id: false,
+        day: { type: Number, required: true },
+        title: { type: String, required: true, trim: true },
+        description: { type: String, required: true, trim: true },
+      },
+    ],
     hotelCategory: { type: String, trim: true },
     meals: { type: String, trim: true },
     transport: { type: String, trim: true },
@@ -125,6 +134,7 @@ packageSchema.methods['toDTO'] = function (): PackageDTO {
     terms: this.terms as string | undefined,
     gallery: this.gallery as string[],
     coverImage: this.coverImage as string | undefined,
+    itinerary: (this.itinerary || []) as Array<{ day: number; title: string; description: string }>,
     hotelCategory: this.hotelCategory as string | undefined,
     meals: this.meals as string | undefined,
     transport: this.transport as string | undefined,

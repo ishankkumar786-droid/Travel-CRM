@@ -105,6 +105,7 @@ export interface PackageDTO extends BaseEntity {
   terms?: string | undefined;
   gallery: string[];
   coverImage?: string | undefined;
+  itinerary?: Array<{ day: number; title: string; description: string }> | undefined;
   hotelCategory?: string | undefined;
   meals?: string | undefined;
   transport?: string | undefined;
@@ -223,25 +224,30 @@ export interface BookingArchitecture {
 
 // ─── Review Architecture ──────────────────────────────────────────────────────
 
+export type ReviewStatus = 'pending' | 'published' | 'rejected';
+
 export interface ReviewDTO extends BaseEntity {
   agencyId: ObjectIdString;
   packageId?: ObjectIdString | undefined;
-  bookingId?: ObjectIdString | undefined;
-  reviewerId: ObjectIdString;
-  reviewerName: string;
+  travelerName: string;
+  travelerEmail: string;
+  rating: number; // 1 to 5
+  content?: string | undefined;
+  status: ReviewStatus;
+  token: string; // Unique token used to submit the review
+  createdAt: ISODateString;
+  updatedAt: ISODateString;
+}
+
+export interface ReviewRequestInput {
+  travelerName: string;
+  travelerEmail: string;
+  packageId?: string | undefined;
+}
+
+export interface SubmitReviewInput {
   rating: number;
-  title?: string | undefined;
-  body: string;
-  images: string[];
-  isVerified: boolean;
-  isApproved: boolean;
-  isFeatured: boolean;
-  agencyReply?:
-    | {
-        body: string;
-        repliedAt: ISODateString;
-      }
-    | undefined;
+  content: string;
 }
 
 // ─── Marketplace Search ───────────────────────────────────────────────────────

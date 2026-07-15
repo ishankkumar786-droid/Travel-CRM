@@ -21,10 +21,30 @@ router.get(
   asyncHandler((req, res) => publicApiController.getAgencyProfile(req, res)),
 );
 
+// ─── Public reviews ───────────────────────────────────────────────────────────
+import { reviewController } from '@/controllers/review.controller';
+
+router.get(
+  '/agencies/:slug/reviews',
+  asyncHandler((req, res) => reviewController.getPublicReviewsForAgency(req, res)),
+);
+router.get(
+  '/reviews/verify/:token',
+  asyncHandler((req, res) => reviewController.getReviewByToken(req, res)),
+);
+router.post(
+  '/reviews/:token',
+  asyncHandler((req, res) => reviewController.submitReview(req, res)),
+);
+
 // ─── Public packages ──────────────────────────────────────────────────────────
 router.get(
   '/packages',
   asyncHandler((req, res) => publicApiController.listPackages(req, res)),
+);
+router.get(
+  '/packages/:slugOrId',
+  asyncHandler((req, res) => publicApiController.getPublicPackage(req, res)),
 );
 
 // ─── Public destinations ──────────────────────────────────────────────────────

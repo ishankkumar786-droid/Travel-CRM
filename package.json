@@ -11,6 +11,8 @@
   "scripts": {
     "dev": "pnpm --parallel --filter './apps/*' dev",
     "dev:admin": "pnpm --filter @travel/admin-crm dev",
+    "dev:agency": "pnpm --filter @travel/agency-portal dev",
+    "dev:customer": "pnpm --filter @travel/customer-web dev",
     "dev:api": "pnpm --filter @travel/api dev",
     "build": "pnpm build:packages && pnpm build:apps",
     "build:packages": "pnpm --filter @travel/types build && pnpm --filter @travel/validation build && pnpm --filter @travel/config build && pnpm --filter @travel/utils build && pnpm --filter @travel/ui build",

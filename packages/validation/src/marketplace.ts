@@ -69,6 +69,15 @@ export const createPackageSchema = z.object({
   terms: z.string().trim().max(5000).optional(),
   gallery: z.array(z.string().url()).max(20).default([]),
   coverImage: z.string().url().optional(),
+  itinerary: z
+    .array(
+      z.object({
+        day: z.coerce.number().int().positive(),
+        title: z.string().trim().max(200),
+        description: z.string().trim().max(2000),
+      })
+    )
+    .optional(),
   hotelCategory: z.string().trim().optional(),
   meals: z.string().trim().optional(),
   transport: z.string().trim().optional(),

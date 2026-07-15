@@ -10,4 +10,5 @@ export * from './agency';
 export * from './crm';
 export * from './phase6';
 export * from './marketplace';
+export * from './review';
 export { z } from 'zod';

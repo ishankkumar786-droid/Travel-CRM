@@ -22,6 +22,7 @@ export interface IUser extends Document {
   status: UserStatus;
   avatar?: string | undefined;
   phone?: string | undefined;
+  agencyId?: mongoose.Types.ObjectId | undefined;
   emailVerified: boolean;
   emailVerificationToken?: string | undefined;
   emailVerificationExpires?: Date | undefined;
@@ -106,6 +107,7 @@ const userSchema = new Schema<IUser>(
     },
     avatar: { type: String },
     phone: { type: String, trim: true },
+    agencyId: { type: Schema.Types.ObjectId, ref: 'Agency', default: undefined },
     emailVerified: { type: Boolean, default: false },
     emailVerificationToken: { type: String, select: false },
     emailVerificationExpires: { type: Date, select: false },
@@ -186,6 +188,7 @@ userSchema.methods['toDTO'] = function (): UserDTO {
     status: this.status as UserStatus,
     avatar: this.avatar as string | undefined,
     phone: this.phone as string | undefined,
+    agencyId: this.agencyId ? (this.agencyId as mongoose.Types.ObjectId).toString() : undefined,
     emailVerified: this.emailVerified as boolean,
     lastLogin: this.lastLogin ? (this.lastLogin as Date).toISOString() : undefined,
     preferences: this.preferences as UserPreferences,

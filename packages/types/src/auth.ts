@@ -68,6 +68,7 @@ export interface UserDTO extends BaseEntity {
   status: UserStatus;
   avatar?: string | undefined;
   phone?: string | undefined;
+  agencyId?: string | undefined;
   emailVerified: boolean;
   lastLogin?: ISODateString | undefined;
   preferences: UserPreferences;

@@ -3,6 +3,7 @@ import { Destination } from '@/models/destination.model';
 import { MarketplaceProfile } from '@/models/marketplace-profile.model';
 import { Package } from '@/models/package.model';
 import { buildPaginationMeta, getSkip } from '@/utils';
+import mongoose from 'mongoose';
 
 import type { RecommendationResult } from '@travel/types';
 import type { SortOrder } from 'mongoose';
@@ -54,8 +55,10 @@ class PublicApiService {
     maxDays?: number;
     featured?: boolean;
     sortBy?: string;
+    agencyId?: string;
   }) {
     const filter: Record<string, unknown> = { status: 'active' };
+    if (opts.agencyId) filter['agencyId'] = opts.agencyId;
     if (opts.destination) filter['destinationName'] = new RegExp(opts.destination, 'i');
     if (opts.category) filter['category'] = opts.category;
     if (opts.featured) filter['isFeatured'] = true;
@@ -155,11 +158,30 @@ class PublicApiService {
     };
   }
 
-  async getPublicAgencyProfile(slug: string) {
+  async getPublicAgencyProfile(slugOrId: string) {
+    let filter: Record<string, unknown> = { publicSlug: slugOrId, isPublic: true };
+    
+    if (mongoose.isValidObjectId(slugOrId)) {
+      filter = { isPublic: true, $or: [{ publicSlug: slugOrId }, { agencyId: slugOrId }] };
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    const profile = await MarketplaceProfile.findOne({ publicSlug: slug, isPublic: true }).exec();
+    const profile = await MarketplaceProfile.findOne(filter).exec();
     if (!profile) return null;
     return (profile as { toDTO(): object }).toDTO();
+  }
+
+  async getPublicPackage(slugOrId: string) {
+    let filter: Record<string, unknown> = { status: 'active', slug: slugOrId };
+    
+    // Check if it's a valid object ID to search by _id
+    if (mongoose.isValidObjectId(slugOrId)) {
+      filter = { status: 'active', $or: [{ slug: slugOrId }, { _id: slugOrId }] };
+    }
+
+    const pkg = await Package.findOne(filter).exec();
+    if (!pkg) return null;
+    return (pkg as { toDTO(): object }).toDTO();
   }
 }
 
