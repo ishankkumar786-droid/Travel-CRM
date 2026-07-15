@@ -1,6 +1,8 @@
-import mongoose, { type Document, Schema } from 'mongoose';
-import type { ReviewDTO, ReviewStatus } from '@travel/types';
 import { randomUUID } from 'crypto';
+
+import mongoose, { type Document, Schema } from 'mongoose';
+
+import type { ReviewDTO, ReviewStatus } from '@travel/types';
 
 export interface IReview extends Document {
   _id: mongoose.Types.ObjectId;

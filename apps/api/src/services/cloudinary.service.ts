@@ -1,7 +1,8 @@
+import { Readable } from 'stream';
+
 import { v2 as cloudinary } from 'cloudinary';
 
 import { logger } from '../lib/logger';
-import { Readable } from 'stream';
 
 // Configure Cloudinary
 cloudinary.config({
@@ -30,7 +31,7 @@ export const uploadImage = (fileBuffer: Buffer, folder = 'travel_crm'): Promise<
         } else {
           reject(new Error('Unknown Cloudinary error'));
         }
-      }
+      },
     );
 
     Readable.from(fileBuffer).pipe(uploadStream);

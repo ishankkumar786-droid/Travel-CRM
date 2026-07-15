@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { publicApiController } from '@/controllers/marketplace.controller';
+import { reviewController } from '@/controllers/review.controller';
 import { asyncHandler } from '@/utils';
 
 import type { Router as ExpressRouter } from 'express';
@@ -22,7 +23,6 @@ router.get(
 );
 
 // ─── Public reviews ───────────────────────────────────────────────────────────
-import { reviewController } from '@/controllers/review.controller';
 
 router.get(
   '/agencies/:slug/reviews',

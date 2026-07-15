@@ -5,10 +5,10 @@ import authRouter from './auth';
 import crmRouter from './crm';
 import healthRouter from './health';
 import marketplaceRouter from './marketplace';
+import notificationsRouter from './notifications';
 import phase6Router from './phase6';
 import publicRouter from './public';
 import reviewsRouter from './reviews';
-import notificationsRouter from './notifications';
 import uploadRouter from './upload';
 
 import type { Router as ExpressRouter } from 'express';

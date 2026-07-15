@@ -1,17 +1,18 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
+
 import { env } from '@/config/env';
 
 async function seedAgencyUser() {
   console.log('🔌 Connecting to MongoDB…');
   await mongoose.connect(env.MONGODB_URI, { dbName: env.MONGODB_DB_NAME });
-  
+
   const { User } = await import('@/models/user.model');
   const { Agency } = await import('@/models/agency.model');
 
   // Find the first agency we seeded
   const agency = await Agency.findOne({ email: 'contact@wanderlust.com' }).exec();
-  
+
   if (!agency) {
     console.error('❌ Could not find Wanderlust Travels agency. Run seed-agencies first.');
     process.exit(1);

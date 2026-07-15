@@ -1,6 +1,7 @@
-import { Review } from '@/models/review.model';
-import { MarketplaceProfile } from '@/models/marketplace-profile.model';
 import { AppError } from '@/errors';
+import { MarketplaceProfile } from '@/models/marketplace-profile.model';
+import { Review } from '@/models/review.model';
+
 import type { ReviewRequestInput, SubmitReviewInput, ReviewDTO } from '@travel/types';
 
 export class ReviewService {
@@ -17,7 +18,7 @@ export class ReviewService {
       packageId: input.packageId,
       status: 'pending',
     });
-    
+
     await review.save();
     return review.toDTO();
   }
@@ -44,11 +45,11 @@ export class ReviewService {
   // Submit a review using a valid token
   async submitReview(token: string, input: SubmitReviewInput): Promise<ReviewDTO> {
     const review = await Review.findOne({ token }).exec();
-    
+
     if (!review) {
       throw new AppError(404, 'Not Found', 'Review link not found.');
     }
-    
+
     if (review.status === 'published') {
       throw new AppError(400, 'Bad Request', 'This review has already been submitted.');
     }
@@ -68,29 +69,31 @@ export class ReviewService {
 
   // Get published reviews for public display
   async getPublicReviewsForAgency(agencyId: string): Promise<ReviewDTO[]> {
-    const reviews = await Review.find({ agencyId, status: 'published' }).sort({ createdAt: -1 }).exec();
+    const reviews = await Review.find({ agencyId, status: 'published' })
+      .sort({ createdAt: -1 })
+      .exec();
     return reviews.map((r) => r.toDTO());
   }
 
   // Recalculates Trust Score and Updates Marketplace Profile
   private async updateAgencyReviewStats(agencyId: string) {
     const reviews = await Review.find({ agencyId, status: 'published' }).exec();
-    
+
     if (reviews.length === 0) return;
 
     const avgRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
-    
+
     // We update trustScore based on reviews. Let's make 5 stars = 100 trust score
     const trustScore = Math.round((avgRating / 5) * 100);
 
     await MarketplaceProfile.findOneAndUpdate(
       { agencyId },
-      { 
-        $set: { 
+      {
+        $set: {
           trustScore,
           // Could also calculate marketplaceScore based on combination of trustScore + profileScore
-        }
-      }
+        },
+      },
     ).exec();
   }
 }

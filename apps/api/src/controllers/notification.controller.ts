@@ -1,7 +1,8 @@
 import { type Request, type Response } from 'express';
-import { notificationService } from '@/services/notification.service';
-import { sendSuccess } from '@/lib/response';
+
 import { AppError } from '@/errors';
+import { sendSuccess } from '@/lib/response';
+import { notificationService } from '@/services/notification.service';
 
 export const notificationController = {
   async getNotifications(req: Request, res: Response) {

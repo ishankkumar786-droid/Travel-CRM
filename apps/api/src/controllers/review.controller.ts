@@ -1,11 +1,12 @@
-import { type Request, type Response } from 'express';
-import { reviewService } from '@/services/review.service';
-import { publicApiService } from '@/services/public-api.service';
-import { sendSuccess, sendCreated } from '@/lib/response';
-import { AppError } from '@/errors';
 import { reviewRequestSchema, submitReviewSchema } from '@travel/validation';
-import { User } from '@/models/user.model';
+import { type Request, type Response } from 'express';
+
+import { AppError } from '@/errors';
+import { sendSuccess, sendCreated } from '@/lib/response';
 import { Agency } from '@/models/agency.model';
+import { User } from '@/models/user.model';
+import { publicApiService } from '@/services/public-api.service';
+import { reviewService } from '@/services/review.service';
 
 export const reviewController = {
   /**
@@ -15,7 +16,7 @@ export const reviewController = {
     const input = reviewRequestSchema.parse(req.body);
     const userId = req.user?.id;
     if (!userId) throw new AppError(401, 'Unauthorized', 'Unauthorized');
-    
+
     const user = await User.findById(userId);
     let agencyId = user?.agencyId?.toString();
     if (!agencyId) {
@@ -56,21 +57,23 @@ export const reviewController = {
   async submitReview(req: Request, res: Response) {
     const { token } = req.params;
     const input = submitReviewSchema.parse(req.body);
-    
+
     const review = await reviewService.submitReview(token as string, input);
     sendSuccess(res, review, 'Review submitted successfully');
   },
 
   async getPublicReviewsForAgency(req: Request, res: Response) {
     const { slug } = req.params;
-    
+
     // First, lookup the agency by slug to get the agencyId
-    const profile = await publicApiService.getPublicAgencyProfile(slug as string) as any;
+    const profile = (await publicApiService.getPublicAgencyProfile(slug as string)) as {
+      agencyId: string;
+    };
     if (!profile) {
       throw new AppError(404, 'Not Found', 'Agency not found');
     }
 
     const reviews = await reviewService.getPublicReviewsForAgency(profile.agencyId);
     sendSuccess(res, reviews, 'Public reviews retrieved');
-  }
+  },
 };

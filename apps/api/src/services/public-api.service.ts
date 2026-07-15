@@ -1,9 +1,10 @@
+import mongoose from 'mongoose';
+
 import { Agency } from '@/models/agency.model';
 import { Destination } from '@/models/destination.model';
 import { MarketplaceProfile } from '@/models/marketplace-profile.model';
 import { Package } from '@/models/package.model';
 import { buildPaginationMeta, getSkip } from '@/utils';
-import mongoose from 'mongoose';
 
 import type { RecommendationResult } from '@travel/types';
 import type { SortOrder } from 'mongoose';
@@ -160,7 +161,7 @@ class PublicApiService {
 
   async getPublicAgencyProfile(slugOrId: string) {
     let filter: Record<string, unknown> = { publicSlug: slugOrId, isPublic: true };
-    
+
     if (mongoose.isValidObjectId(slugOrId)) {
       filter = { isPublic: true, $or: [{ publicSlug: slugOrId }, { agencyId: slugOrId }] };
     }
@@ -173,7 +174,7 @@ class PublicApiService {
 
   async getPublicPackage(slugOrId: string) {
     let filter: Record<string, unknown> = { status: 'active', slug: slugOrId };
-    
+
     // Check if it's a valid object ID to search by _id
     if (mongoose.isValidObjectId(slugOrId)) {
       filter = { status: 'active', $or: [{ slug: slugOrId }, { _id: slugOrId }] };
