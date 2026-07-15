@@ -7,11 +7,15 @@ export const metadata = {
   description: 'Explore and book curated travel packages from verified agencies across India.',
 };
 
-export default function PackagesPage({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+export default function PackagesPage({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
   return (
     <>
       <Navbar />
-      <main className="pt-24 pb-16 min-h-screen">
+      <main className="min-h-screen pb-16 pt-24">
         <PackagesList searchParams={searchParams} />
       </main>
       <Footer />

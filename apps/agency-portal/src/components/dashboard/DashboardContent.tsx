@@ -34,13 +34,21 @@ interface StatCardProps {
   isLoading?: boolean;
 }
 
-function StatCard({ title, value, change, changeType = 'neutral', icon, description, isLoading }: StatCardProps) {
+function StatCard({
+  title,
+  value,
+  change,
+  changeType = 'neutral',
+  icon,
+  description,
+  isLoading,
+}: StatCardProps) {
   return (
     <Card className="card-hover">
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
           <div className="space-y-2">
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
+            <p className="text-muted-foreground text-sm font-medium">{title}</p>
             {isLoading ? (
               <Skeleton className="h-8 w-20" />
             ) : (
@@ -49,9 +57,9 @@ function StatCard({ title, value, change, changeType = 'neutral', icon, descript
             {change && !isLoading && (
               <div className="flex items-center gap-1">
                 {changeType === 'positive' ? (
-                  <ArrowUpRight className="h-3.5 w-3.5 text-success" />
+                  <ArrowUpRight className="text-success h-3.5 w-3.5" />
                 ) : changeType === 'negative' ? (
-                  <ArrowDownRight className="h-3.5 w-3.5 text-destructive" />
+                  <ArrowDownRight className="text-destructive h-3.5 w-3.5" />
                 ) : null}
                 <span
                   className={cn(
@@ -64,12 +72,12 @@ function StatCard({ title, value, change, changeType = 'neutral', icon, descript
                   {change}
                 </span>
                 {description && (
-                  <span className="text-xs text-muted-foreground">{description}</span>
+                  <span className="text-muted-foreground text-xs">{description}</span>
                 )}
               </div>
             )}
           </div>
-          <div className="rounded-xl bg-primary/10 p-2.5 text-primary">{icon}</div>
+          <div className="bg-primary/10 text-primary rounded-xl p-2.5">{icon}</div>
         </div>
       </CardContent>
     </Card>
@@ -90,16 +98,16 @@ function QuickAction({ icon, title, description, href }: QuickActionProps) {
   return (
     <button
       onClick={() => router.push(href)}
-      className="group flex w-full items-center gap-4 rounded-xl border bg-card p-4 text-left transition-all duration-200 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 hover:-translate-y-0.5"
+      className="bg-card hover:border-primary/30 hover:shadow-primary/5 group flex w-full items-center gap-4 rounded-xl border p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
     >
-      <div className="rounded-lg bg-primary/10 p-2.5 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+      <div className="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground rounded-lg p-2.5 transition-colors">
         {icon}
       </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-foreground">{title}</p>
-        <p className="text-xs text-muted-foreground truncate">{description}</p>
+      <div className="min-w-0 flex-1">
+        <p className="text-foreground text-sm font-semibold">{title}</p>
+        <p className="text-muted-foreground truncate text-xs">{description}</p>
       </div>
-      <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      <ArrowUpRight className="text-muted-foreground h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
     </button>
   );
 }
@@ -184,10 +192,10 @@ export function DashboardContent() {
         </div>
         <Card className="border-warning/30 bg-warning/5">
           <CardContent className="flex items-center gap-4 p-6">
-            <AlertCircle className="h-8 w-8 text-warning shrink-0" />
+            <AlertCircle className="text-warning h-8 w-8 shrink-0" />
             <div>
-              <p className="font-semibold text-foreground">No Agency Linked</p>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-foreground font-semibold">No Agency Linked</p>
+              <p className="text-muted-foreground mt-1 text-sm">
                 Your account is not yet linked to an agency. Please contact an administrator to
                 associate your account with an agency, or complete the registration process.
               </p>
@@ -207,7 +215,8 @@ export function DashboardContent() {
             Welcome back, {user?.firstName ?? 'Agency'}! 👋
           </h1>
           <p className="text-muted-foreground">
-            Here&apos;s what&apos;s happening with <span className="font-medium text-foreground">{agencyName}</span> today.
+            Here&apos;s what&apos;s happening with{' '}
+            <span className="text-foreground font-medium">{agencyName}</span> today.
           </p>
         </div>
         <Button onClick={() => router.push('/packages')}>
@@ -228,7 +237,7 @@ export function DashboardContent() {
         />
         <StatCard
           title="Verification"
-          value={isVerified ? 'Verified' : agency?.verificationStatus ?? '—'}
+          value={isVerified ? 'Verified' : (agency?.verificationStatus ?? '—')}
           change={isVerified ? 'All clear' : 'Action needed'}
           changeType={isVerified ? 'positive' : 'negative'}
           icon={<Users className="h-5 w-5" />}
@@ -245,7 +254,11 @@ export function DashboardContent() {
         <StatCard
           title="Marketplace"
           value={agency?.marketplaceStatus === 'listed' ? 'Listed' : 'Unlisted'}
-          change={agency?.marketplaceStatus === 'listed' ? 'Visible to customers' : 'Complete profile to list'}
+          change={
+            agency?.marketplaceStatus === 'listed'
+              ? 'Visible to customers'
+              : 'Complete profile to list'
+          }
           changeType={agency?.marketplaceStatus === 'listed' ? 'positive' : 'neutral'}
           icon={<Star className="h-5 w-5" />}
           isLoading={agencyLoading}
@@ -273,21 +286,21 @@ export function DashboardContent() {
                 <div
                   key={activity.id}
                   className={cn(
-                    'flex items-start gap-3.5 rounded-lg p-3 transition-colors hover:bg-muted/50',
-                    i < MOCK_ACTIVITIES.length - 1 && 'border-b border-border/50',
+                    'hover:bg-muted/50 flex items-start gap-3.5 rounded-lg p-3 transition-colors',
+                    i < MOCK_ACTIVITIES.length - 1 && 'border-border/50 border-b',
                   )}
                   style={{ animationDelay: `${i * 80}ms` }}
                 >
                   <div className={cn('mt-0.5 rounded-lg p-2', activityColors[activity.type])}>
                     {activityIcons[activity.type]}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">{activity.title}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5 truncate">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-foreground text-sm font-medium">{activity.title}</p>
+                    <p className="text-muted-foreground mt-0.5 truncate text-xs">
                       {activity.description}
                     </p>
                   </div>
-                  <span className="shrink-0 text-xs text-muted-foreground">{activity.time}</span>
+                  <span className="text-muted-foreground shrink-0 text-xs">{activity.time}</span>
                 </div>
               ))}
             </div>
@@ -327,20 +340,20 @@ export function DashboardContent() {
           {/* Profile Completion */}
           <Card className="border-primary/20 bg-primary/5">
             <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
+              <div className="mb-2 flex items-center justify-between">
                 <p className="text-sm font-semibold">Profile Completion</p>
                 <Badge variant={profileCompletion >= 80 ? 'success' : 'warning'}>
                   {profileCompletion}%
                 </Badge>
               </div>
               <div className="space-y-2">
-                <div className="h-2 rounded-full bg-muted overflow-hidden">
+                <div className="bg-muted h-2 overflow-hidden rounded-full">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-700"
+                    className="from-primary to-accent h-full rounded-full bg-gradient-to-r transition-all duration-700"
                     style={{ width: `${profileCompletion}%` }}
                   />
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   {profileCompletion >= 80
                     ? 'Great job! Your profile is in good shape.'
                     : 'Complete your profile to improve visibility on the marketplace.'}

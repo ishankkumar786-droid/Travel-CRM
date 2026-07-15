@@ -72,12 +72,10 @@ export const reviewService = {
 };
 
 export const notificationService = {
-  getNotifications: (page = 1, limit = 20) => 
+  getNotifications: (page = 1, limit = 20) =>
     apiClient.get(`/notifications?page=${page}&limit=${limit}`).then((res) => res.data),
-  markAsRead: (id: string) => 
-    apiClient.patch(`/notifications/${id}/read`).then((res) => res.data),
-  markAllAsRead: () => 
-    apiClient.post('/notifications/read-all').then((res) => res.data),
+  markAsRead: (id: string) => apiClient.patch(`/notifications/${id}/read`).then((res) => res.data),
+  markAllAsRead: () => apiClient.post('/notifications/read-all').then((res) => res.data),
 };
 
 apiClient.interceptors.response.use(

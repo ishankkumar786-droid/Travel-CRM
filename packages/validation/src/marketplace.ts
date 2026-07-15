@@ -75,7 +75,7 @@ export const createPackageSchema = z.object({
         day: z.coerce.number().int().positive(),
         title: z.string().trim().max(200),
         description: z.string().trim().max(2000),
-      })
+      }),
     )
     .optional(),
   hotelCategory: z.string().trim().optional(),

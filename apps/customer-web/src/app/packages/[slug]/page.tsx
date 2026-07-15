@@ -8,7 +8,7 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const name = params.slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  const name = params.slug.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
   return {
     title: `${name} | TravelMarket`,
     description: `View details, itinerary, and pricing for ${name} on TravelMarket.`,
@@ -19,7 +19,7 @@ export default function PackagePage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main className="pt-20 pb-16">
+      <main className="pb-16 pt-20">
         <PackageDetail slug={params.slug} />
       </main>
       <Footer />

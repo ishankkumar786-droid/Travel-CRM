@@ -5,7 +5,8 @@ import { AgenciesContent } from '@/components/agencies/AgenciesContent';
 
 export const metadata: Metadata = {
   title: 'Browse Agencies',
-  description: 'Find verified travel agencies across India. Filter by destination, ratings, and more.',
+  description:
+    'Find verified travel agencies across India. Filter by destination, ratings, and more.',
 };
 
 export default function AgenciesPage() {

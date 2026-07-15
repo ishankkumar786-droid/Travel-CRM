@@ -16,8 +16,11 @@ async function main() {
     let profile = await MarketplaceProfile.findOne({ agencyId: agency._id });
     if (!profile) {
       // Just use the name for the slug if possible, or fallback to name-code
-      let slug = agency.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      
+      let slug = agency.name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+
       // Check if slug exists
       const exists = await MarketplaceProfile.findOne({ publicSlug: slug });
       if (exists) {

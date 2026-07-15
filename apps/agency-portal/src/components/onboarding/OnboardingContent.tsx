@@ -115,22 +115,24 @@ export function OnboardingContent() {
       </div>
 
       {/* Progress Card */}
-      <Card className="border-primary/20 bg-gradient-to-r from-primary/5 via-background to-accent/5">
+      <Card className="border-primary/20 from-primary/5 via-background to-accent/5 bg-gradient-to-r">
         <CardContent className="p-6">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="mb-2 flex items-center gap-2">
                 <h2 className="text-lg font-bold">{progress}% Complete</h2>
-                <Badge variant="info">{completedCount}/{STEPS.length} steps</Badge>
+                <Badge variant="info">
+                  {completedCount}/{STEPS.length} steps
+                </Badge>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 You&apos;re making great progress! Complete the remaining steps to go live.
               </p>
             </div>
             <div className="w-full sm:w-48">
-              <div className="h-3 rounded-full bg-muted overflow-hidden">
+              <div className="bg-muted h-3 overflow-hidden rounded-full">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-700"
+                  className="from-primary to-accent h-full rounded-full bg-gradient-to-r transition-all duration-700"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -148,7 +150,7 @@ export function OnboardingContent() {
           return (
             <div
               key={step.id}
-              className="relative flex gap-4 animate-fade-in"
+              className="animate-fade-in relative flex gap-4"
               style={{ animationDelay: `${index * 80}ms` }}
             >
               {/* Timeline connector */}
@@ -156,7 +158,8 @@ export function OnboardingContent() {
                 <div
                   className={cn(
                     'flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 transition-all',
-                    step.status === 'completed' && 'border-success bg-success text-success-foreground',
+                    step.status === 'completed' &&
+                      'border-success bg-success text-success-foreground',
                     step.status === 'current' && 'border-warning bg-warning/10 text-warning',
                     step.status === 'upcoming' && 'border-muted bg-muted text-muted-foreground',
                   )}
@@ -167,29 +170,27 @@ export function OnboardingContent() {
                     <step.icon className="h-5 w-5" />
                   )}
                 </div>
-                {!isLast && (
-                  <div className={cn('w-0.5 flex-1 min-h-[2rem]', config.lineColor)} />
-                )}
+                {!isLast && <div className={cn('min-h-[2rem] w-0.5 flex-1', config.lineColor)} />}
               </div>
 
               {/* Content */}
               <Card
                 className={cn(
                   'mb-4 flex-1 transition-all',
-                  step.status === 'current' && 'border-warning/30 shadow-md shadow-warning/5',
+                  step.status === 'current' && 'border-warning/30 shadow-warning/5 shadow-md',
                   step.status === 'completed' && 'opacity-75',
                 )}
               >
                 <CardContent className="p-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="mb-1 flex items-center gap-2">
                         <h3 className="text-sm font-semibold">{step.title}</h3>
                         <Badge variant={config.variant} className="text-[10px]">
                           {config.badge}
                         </Badge>
                       </div>
-                      <p className="text-xs text-muted-foreground">{step.description}</p>
+                      <p className="text-muted-foreground text-xs">{step.description}</p>
                     </div>
                     {step.actionLabel && step.status !== 'completed' && (
                       <Button

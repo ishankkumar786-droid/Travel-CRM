@@ -9,7 +9,7 @@ export default function ReviewPage({ params }: { params: { token: string } }) {
   return (
     <>
       <Navbar />
-      <main className="pt-24 pb-16 min-h-screen bg-muted/30">
+      <main className="bg-muted/30 min-h-screen pb-16 pt-24">
         <ReviewSubmission token={params.token} />
       </main>
       <Footer />

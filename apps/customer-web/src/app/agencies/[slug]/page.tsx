@@ -8,7 +8,7 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const name = params.slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  const name = params.slug.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
   return {
     title: name,
     description: `View packages and reviews for ${name} — a verified travel agency on TravelMarket.`,

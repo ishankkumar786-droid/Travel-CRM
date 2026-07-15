@@ -30,9 +30,7 @@ export const agencyApi = {
 // ─── Onboarding ───────────────────────────────────────────────────────────────
 export const onboardingApi = {
   get: async (agencyId: string) => {
-    const { data } = await apiClient.get<Env<OnboardingDTO>>(
-      `/agencies/${agencyId}/onboarding`,
-    );
+    const { data } = await apiClient.get<Env<OnboardingDTO>>(`/agencies/${agencyId}/onboarding`);
     return data.data;
   },
 };

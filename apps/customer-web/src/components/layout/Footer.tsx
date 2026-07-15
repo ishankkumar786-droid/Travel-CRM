@@ -17,14 +17,23 @@ const SOCIAL = [
 
 export function Footer() {
   return (
-    <footer className="border-t bg-card">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16">
+    <footer className="bg-card border-t">
+      <div className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6">
           {/* Brand — span 2 */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <Link href="/" className="mb-4 flex items-center gap-2">
+              <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="m3 11 19-9-9 19-2-8-8-2Z" />
                 </svg>
               </div>
@@ -32,15 +41,16 @@ export function Footer() {
                 Travel<span className="text-primary">Market</span>
               </span>
             </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-5 max-w-xs">
-              Your gateway to curated travel experiences across India. Verified agencies, transparent pricing.
+            <p className="text-muted-foreground mb-5 max-w-xs text-sm leading-relaxed">
+              Your gateway to curated travel experiences across India. Verified agencies,
+              transparent pricing.
             </p>
             <div className="flex items-center gap-2">
               {SOCIAL.map(({ icon: Icon, label }) => (
                 <button
                   key={label}
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border text-muted-foreground transition-colors hover:bg-primary hover:text-white hover:border-primary"
+                  className="text-muted-foreground hover:bg-primary hover:border-primary flex h-9 w-9 items-center justify-center rounded-lg border transition-colors hover:text-white"
                 >
                   <Icon className="h-4 w-4" />
                 </button>
@@ -51,11 +61,19 @@ export function Footer() {
           {/* Link columns */}
           {Object.entries(LINKS).map(([heading, links]) => (
             <div key={heading}>
-              <h4 className="text-sm font-semibold text-foreground mb-4" style={{ fontFamily: 'var(--font-display)' }}>{heading}</h4>
+              <h4
+                className="text-foreground mb-4 text-sm font-semibold"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                {heading}
+              </h4>
               <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link}>
-                    <Link href="/coming-soon" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                    <Link
+                      href="/coming-soon"
+                      className="text-muted-foreground hover:text-primary text-sm transition-colors"
+                    >
                       {link}
                     </Link>
                   </li>
@@ -66,12 +84,18 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-6 sm:flex-row">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             &copy; {new Date().getFullYear()} TravelMarket. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {['Terms', 'Privacy', 'Cookies'].map((t) => (
-              <Link key={t} href="/coming-soon" className="text-xs text-muted-foreground hover:text-primary transition-colors">{t}</Link>
+              <Link
+                key={t}
+                href="/coming-soon"
+                className="text-muted-foreground hover:text-primary text-xs transition-colors"
+              >
+                {t}
+              </Link>
             ))}
           </div>
         </div>

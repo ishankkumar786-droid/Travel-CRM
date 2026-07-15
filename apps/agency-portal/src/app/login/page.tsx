@@ -9,17 +9,17 @@ export default function LoginPage() {
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
-        <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
+        <div className="from-primary/5 via-background to-accent/5 absolute inset-0 bg-gradient-to-br" />
+        <div className="bg-primary/10 absolute -right-40 -top-40 h-80 w-80 rounded-full blur-3xl" />
+        <div className="bg-accent/10 absolute -bottom-40 -left-40 h-80 w-80 rounded-full blur-3xl" />
       </div>
 
-      <div className="w-full max-w-md animate-fade-in-up">
+      <div className="animate-fade-in-up w-full max-w-md">
         {/* Brand header */}
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/25">
+          <div className="bg-primary shadow-primary/25 mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl shadow-lg">
             <svg
-              className="h-7 w-7 text-primary-foreground"
+              className="text-primary-foreground h-7 w-7"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="none"
@@ -36,17 +36,13 @@ export default function LoginPage() {
               <path d="m16 16-1.5-1.5" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">
-            Agency Portal
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Sign in to manage your travel agency
-          </p>
+          <h1 className="text-foreground text-2xl font-bold tracking-tight">Agency Portal</h1>
+          <p className="text-muted-foreground mt-1 text-sm">Sign in to manage your travel agency</p>
         </div>
 
         <LoginForm />
 
-        <p className="mt-8 text-center text-xs text-muted-foreground">
+        <p className="text-muted-foreground mt-8 text-center text-xs">
           &copy; {new Date().getFullYear()} Travel Marketplace. All rights reserved.
         </p>
       </div>

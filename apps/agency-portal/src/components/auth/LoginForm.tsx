@@ -38,8 +38,7 @@ export function LoginForm() {
       toast.success('Welcome back!', { description: 'Signed in successfully.' });
       router.push('/dashboard');
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : 'Invalid credentials. Please try again.';
+      const message = err instanceof Error ? err.message : 'Invalid credentials. Please try again.';
       toast.error('Sign in failed', { description: message });
     } finally {
       setIsSubmitting(false);
@@ -48,10 +47,10 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="rounded-xl border bg-card p-6 shadow-sm">
+      <div className="bg-card rounded-xl border p-6 shadow-sm">
         <div className="space-y-4">
           <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium text-foreground">
+            <label htmlFor="email" className="text-foreground text-sm font-medium">
               Email Address
             </label>
             <Input
@@ -72,12 +71,12 @@ export function LoginForm() {
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label htmlFor="password" className="text-sm font-medium text-foreground">
+              <label htmlFor="password" className="text-foreground text-sm font-medium">
                 Password
               </label>
               <a
                 href="/forgot-password"
-                className="text-xs font-medium text-primary hover:text-primary/80 transition-colors"
+                className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
               >
                 Forgot password?
               </a>
@@ -99,7 +98,7 @@ export function LoginForm() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-foreground absolute right-3 top-1/2 -translate-y-1/2 transition-colors"
                 tabIndex={-1}
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -113,9 +112,9 @@ export function LoginForm() {
         </Button>
       </div>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-muted-foreground text-center text-sm">
         Don&apos;t have an account?{' '}
-        <a href="#" className="font-medium text-primary hover:text-primary/80 transition-colors">
+        <a href="#" className="text-primary hover:text-primary/80 font-medium transition-colors">
           Contact Admin
         </a>
       </p>

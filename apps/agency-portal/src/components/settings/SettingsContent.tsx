@@ -1,13 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  User,
-  Building2,
-  Lock,
-  Bell,
-  Palette,
-} from 'lucide-react';
+import { User, Building2, Lock, Bell, Palette } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useAuth } from '@/contexts/AuthContext';
@@ -43,7 +37,7 @@ export function SettingsContent() {
 
       <div className="grid gap-6 lg:grid-cols-4">
         {/* Sidebar nav */}
-        <Card className="lg:col-span-1 h-fit">
+        <Card className="h-fit lg:col-span-1">
           <CardContent className="p-2">
             <nav className="space-y-0.5">
               {settingsTabs.map((tab) => (
@@ -66,7 +60,7 @@ export function SettingsContent() {
         </Card>
 
         {/* Content */}
-        <div className="lg:col-span-3 space-y-6">
+        <div className="space-y-6 lg:col-span-3">
           {activeTab === 'profile' && (
             <Card className="animate-fade-in">
               <CardHeader>
@@ -93,7 +87,9 @@ export function SettingsContent() {
                   </div>
                 </div>
                 <div className="flex justify-end pt-2">
-                  <Button onClick={() => toast.success('Profile updated successfully')}>Save Changes</Button>
+                  <Button onClick={() => toast.success('Profile updated successfully')}>
+                    Save Changes
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -125,7 +121,9 @@ export function SettingsContent() {
                   </div>
                 </div>
                 <div className="flex justify-end pt-2">
-                  <Button onClick={() => toast.success('Agency information updated')}>Save Changes</Button>
+                  <Button onClick={() => toast.success('Agency information updated')}>
+                    Save Changes
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -137,7 +135,7 @@ export function SettingsContent() {
                 <CardTitle>Change Password</CardTitle>
                 <CardDescription>Update your account password</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 max-w-md">
+              <CardContent className="max-w-md space-y-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Current Password</label>
                   <Input type="password" />
@@ -151,7 +149,9 @@ export function SettingsContent() {
                   <Input type="password" />
                 </div>
                 <div className="flex justify-end pt-2">
-                  <Button onClick={() => toast.success('Password updated successfully')}>Update Password</Button>
+                  <Button onClick={() => toast.success('Password updated successfully')}>
+                    Update Password
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -166,10 +166,19 @@ export function SettingsContent() {
               <CardContent>
                 <div className="space-y-4">
                   {[
-                    { label: 'New enquiry received', description: 'Get notified when someone enquires about your packages' },
-                    { label: 'Booking confirmed', description: 'Notifications for confirmed bookings' },
+                    {
+                      label: 'New enquiry received',
+                      description: 'Get notified when someone enquires about your packages',
+                    },
+                    {
+                      label: 'Booking confirmed',
+                      description: 'Notifications for confirmed bookings',
+                    },
                     { label: 'New reviews', description: 'When a customer leaves a review' },
-                    { label: 'Verification updates', description: 'Status changes on your documents' },
+                    {
+                      label: 'Verification updates',
+                      description: 'Status changes on your documents',
+                    },
                     { label: 'Marketplace updates', description: 'New features and announcements' },
                   ].map((pref) => (
                     <div
@@ -178,11 +187,11 @@ export function SettingsContent() {
                     >
                       <div>
                         <p className="text-sm font-medium">{pref.label}</p>
-                        <p className="text-xs text-muted-foreground">{pref.description}</p>
+                        <p className="text-muted-foreground text-xs">{pref.description}</p>
                       </div>
                       <label className="relative inline-flex cursor-pointer items-center">
                         <input type="checkbox" defaultChecked className="peer sr-only" />
-                        <div className="h-6 w-11 rounded-full bg-muted peer-checked:bg-primary peer-focus:ring-2 peer-focus:ring-primary/20 transition-colors after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full" />
+                        <div className="bg-muted peer-checked:bg-primary peer-focus:ring-primary/20 h-6 w-11 rounded-full transition-colors after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-focus:ring-2" />
                       </label>
                     </div>
                   ))}
@@ -198,9 +207,9 @@ export function SettingsContent() {
                 <CardDescription>Customize the look and feel of your portal</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Theme settings are managed via the theme toggle in the header. Click the
-                  sun/moon icon to switch between light and dark mode.
+                <p className="text-muted-foreground text-sm">
+                  Theme settings are managed via the theme toggle in the header. Click the sun/moon
+                  icon to switch between light and dark mode.
                 </p>
               </CardContent>
             </Card>

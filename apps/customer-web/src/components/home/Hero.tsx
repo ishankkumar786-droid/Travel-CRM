@@ -34,7 +34,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative h-[100svh] min-h-[600px] max-h-[900px] flex items-center overflow-hidden">
+    <section className="relative flex h-[100svh] max-h-[900px] min-h-[600px] items-center overflow-hidden">
       {/* Animated Background Images */}
       <AnimatePresence mode="popLayout">
         <motion.div
@@ -55,7 +55,7 @@ export function Hero() {
       {/* Dark & Warm Overlays for text legibility */}
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
       <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#0f1218] via-transparent to-black/30" />
-      <div className="absolute inset-0 z-0 bg-primary/10 mix-blend-overlay" />
+      <div className="bg-primary/10 absolute inset-0 z-0 mix-blend-overlay" />
 
       {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 lg:px-8">
@@ -67,8 +67,8 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6 flex items-center gap-3"
           >
-            <div className="h-px w-10 bg-primary" />
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+            <div className="bg-primary h-px w-10" />
+            <span className="text-primary text-xs font-semibold uppercase tracking-[0.25em]">
               Curated Travel Experiences
             </span>
           </motion.div>
@@ -80,8 +80,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-4xl font-bold leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-[4rem]"
           >
-            Explore India&apos;s Most{' '}
-            <span className="italic text-primary">Breathtaking</span>{' '}
+            Explore India&apos;s Most <span className="text-primary italic">Breathtaking</span>{' '}
             Destinations
           </motion.h1>
 
@@ -92,8 +91,8 @@ export function Hero() {
             className="mt-6 max-w-lg text-base leading-relaxed text-white/80 sm:text-lg"
             style={{ fontFamily: 'var(--font-sans)' }}
           >
-            Handpicked packages from 100+ verified travel agencies. 
-            Plan your dream trip with confidence.
+            Handpicked packages from 100+ verified travel agencies. Plan your dream trip with
+            confidence.
           </motion.p>
 
           {/* Search Bar */}
@@ -104,8 +103,8 @@ export function Hero() {
             onSubmit={handleSearch}
             className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
-            <div className="flex flex-1 items-center gap-3 rounded-xl bg-black/40 px-4 py-3.5 backdrop-blur-md border border-white/10 transition-colors focus-within:border-primary/50 focus-within:bg-black/60">
-              <Search className="h-5 w-5 text-white/50 shrink-0" />
+            <div className="focus-within:border-primary/50 flex flex-1 items-center gap-3 rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 backdrop-blur-md transition-colors focus-within:bg-black/60">
+              <Search className="h-5 w-5 shrink-0 text-white/50" />
               <input
                 type="text"
                 value={search}
@@ -117,7 +116,7 @@ export function Hero() {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition-all hover:brightness-110 hover:shadow-xl hover:shadow-primary/30 shrink-0"
+              className="bg-primary shadow-primary/25 hover:shadow-primary/30 inline-flex shrink-0 items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:brightness-110"
               style={{ fontFamily: 'var(--font-sans)' }}
             >
               Search
@@ -140,7 +139,9 @@ export function Hero() {
             ].map((s, i) => (
               <div key={s.label} className="flex flex-col">
                 <span className="text-xl font-bold text-white">{s.value}</span>
-                <span className="text-[0.6875rem] text-white/50 uppercase tracking-wider">{s.label}</span>
+                <span className="text-[0.6875rem] uppercase tracking-wider text-white/50">
+                  {s.label}
+                </span>
               </div>
             ))}
           </motion.div>
@@ -154,7 +155,7 @@ export function Hero() {
             key={i}
             onClick={() => setCurrentImage(i)}
             className={`h-1.5 rounded-full transition-all duration-500 ${
-              currentImage === i ? 'w-8 bg-primary' : 'w-2 bg-white/30 hover:bg-white/50'
+              currentImage === i ? 'bg-primary w-8' : 'w-2 bg-white/30 hover:bg-white/50'
             }`}
             aria-label={`Go to slide ${i + 1}`}
           />

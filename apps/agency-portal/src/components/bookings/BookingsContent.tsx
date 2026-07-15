@@ -47,7 +47,8 @@ const MOCK_ENQUIRIES: Enquiry[] = [
     email: 'rahul@example.com',
     phone: '+91 98765 43210',
     packageName: 'Goa Beach Paradise',
-    message: 'Hi, I am interested in this package for 4 people. Can you provide more details about accommodation?',
+    message:
+      'Hi, I am interested in this package for 4 people. Can you provide more details about accommodation?',
     status: 'new',
     date: '2026-07-14T10:30:00Z',
     travelDate: '2026-08-15',
@@ -82,7 +83,7 @@ const MOCK_ENQUIRIES: Enquiry[] = [
     email: 'sneha@example.com',
     phone: '+91 65432 10987',
     packageName: 'Kerala Backwaters Cruise',
-    message: 'Interested but the dates don\'t work for us. Any alternative dates available?',
+    message: "Interested but the dates don't work for us. Any alternative dates available?",
     status: 'closed',
     date: '2026-07-10T16:45:00Z',
     guests: 3,
@@ -140,7 +141,7 @@ export function BookingsContent() {
           <Card key={stat.label} className="card-hover">
             <CardContent className="p-4 text-center">
               <p className={cn('text-2xl font-bold', stat.color)}>{stat.value}</p>
-              <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+              <p className="text-muted-foreground mt-1 text-xs">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -156,7 +157,7 @@ export function BookingsContent() {
               'flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-medium transition-colors',
               activeTab === tab.key
                 ? 'border-primary text-primary'
-                : 'border-transparent text-muted-foreground hover:text-foreground',
+                : 'text-muted-foreground hover:text-foreground border-transparent',
             )}
           >
             {tab.label}
@@ -202,9 +203,9 @@ export function BookingsContent() {
                 <Card
                   key={enquiry.id}
                   className={cn(
-                    'cursor-pointer transition-all duration-200 animate-fade-in',
+                    'animate-fade-in cursor-pointer transition-all duration-200',
                     selectedEnquiry === enquiry.id
-                      ? 'border-primary ring-1 ring-primary/20'
+                      ? 'border-primary ring-primary/20 ring-1'
                       : 'hover:border-primary/30',
                   )}
                   style={{ animationDelay: `${i * 50}ms` }}
@@ -212,26 +213,29 @@ export function BookingsContent() {
                 >
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
+                      <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
-                          <p className="text-sm font-semibold truncate">{enquiry.name}</p>
+                          <p className="truncate text-sm font-semibold">{enquiry.name}</p>
                           <Badge variant={config.variant} className="shrink-0">
                             <StatusIcon className="mr-1 h-3 w-3" />
                             {config.label}
                           </Badge>
                         </div>
-                        <p className="mt-1 text-xs text-muted-foreground truncate">
+                        <p className="text-muted-foreground mt-1 truncate text-xs">
                           {enquiry.packageName}
                         </p>
-                        <p className="mt-1.5 text-xs text-muted-foreground line-clamp-1">
+                        <p className="text-muted-foreground mt-1.5 line-clamp-1 text-xs">
                           {enquiry.message}
                         </p>
                       </div>
                       <div className="shrink-0 text-right">
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(enquiry.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                        <p className="text-muted-foreground text-xs">
+                          {new Date(enquiry.date).toLocaleDateString('en-IN', {
+                            day: 'numeric',
+                            month: 'short',
+                          })}
                         </p>
-                        <ChevronRight className="mt-2 h-4 w-4 text-muted-foreground ml-auto" />
+                        <ChevronRight className="text-muted-foreground ml-auto mt-2 h-4 w-4" />
                       </div>
                     </div>
                   </CardContent>
@@ -243,7 +247,7 @@ export function BookingsContent() {
 
         {/* Detail panel */}
         {selected && (
-          <Card className="lg:col-span-3 animate-slide-in-right">
+          <Card className="animate-slide-in-right lg:col-span-3">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div>
@@ -259,18 +263,19 @@ export function BookingsContent() {
               {/* Contact info */}
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="flex items-center gap-2.5 text-sm">
-                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  <Mail className="text-muted-foreground h-4 w-4" />
                   <span>{selected.email}</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-sm">
-                  <Phone className="h-4 w-4 text-muted-foreground" />
+                  <Phone className="text-muted-foreground h-4 w-4" />
                   <span>{selected.phone}</span>
                 </div>
                 {selected.travelDate && (
                   <div className="flex items-center gap-2.5 text-sm">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <Calendar className="text-muted-foreground h-4 w-4" />
                     <span>
-                      Travel: {new Date(selected.travelDate).toLocaleDateString('en-IN', {
+                      Travel:{' '}
+                      {new Date(selected.travelDate).toLocaleDateString('en-IN', {
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric',
@@ -280,20 +285,20 @@ export function BookingsContent() {
                 )}
                 {selected.guests && (
                   <div className="flex items-center gap-2.5 text-sm">
-                    <User className="h-4 w-4 text-muted-foreground" />
+                    <User className="text-muted-foreground h-4 w-4" />
                     <span>{selected.guests} guests</span>
                   </div>
                 )}
               </div>
 
               {/* Message */}
-              <div className="rounded-lg bg-muted/50 p-4">
-                <p className="text-xs font-medium text-muted-foreground mb-1.5">Message</p>
-                <p className="text-sm text-foreground">{selected.message}</p>
+              <div className="bg-muted/50 rounded-lg p-4">
+                <p className="text-muted-foreground mb-1.5 text-xs font-medium">Message</p>
+                <p className="text-foreground text-sm">{selected.message}</p>
               </div>
 
               {/* Enquiry time */}
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <div className="text-muted-foreground flex items-center gap-2 text-xs">
                 <Clock className="h-3.5 w-3.5" />
                 <span>
                   Received on{' '}
@@ -308,12 +313,16 @@ export function BookingsContent() {
               </div>
 
               {/* Actions */}
-              <div className="flex flex-wrap gap-2 pt-2 border-t">
+              <div className="flex flex-wrap gap-2 border-t pt-2">
                 <Button size="sm" onClick={() => toast.success('Reply draft opened')}>
                   <MessageSquare className="mr-2 h-4 w-4" />
                   Reply
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => toast.success('Quotation builder opened')}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => toast.success('Quotation builder opened')}
+                >
                   <ArrowUpRight className="mr-2 h-4 w-4" />
                   Create Quotation
                 </Button>

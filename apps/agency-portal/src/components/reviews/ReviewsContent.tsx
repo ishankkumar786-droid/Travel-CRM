@@ -27,7 +27,12 @@ export function ReviewsContent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [generatedLink, setGeneratedLink] = useState<string | null>(null);
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ReviewRequestInput>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<ReviewRequestInput>({
     resolver: zodResolver(reviewRequestSchema),
   });
 
@@ -52,7 +57,8 @@ export function ReviewsContent() {
     try {
       const res = await reviewService.requestReview(data);
       // Construct the frontend link (Customer Portal runs on port 3002 usually)
-      const customerPortalUrl = process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL || 'http://localhost:3002';
+      const customerPortalUrl =
+        process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL || 'http://localhost:3002';
       const link = `${customerPortalUrl}/review/${res.data.token}`;
       setGeneratedLink(link);
       loadReviews();
@@ -67,55 +73,71 @@ export function ReviewsContent() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Reviews</h1>
-          <p className="text-muted-foreground mt-1">Manage verified customer reviews and send requests.</p>
+          <p className="text-muted-foreground mt-1">
+            Manage verified customer reviews and send requests.
+          </p>
         </div>
-        <Button onClick={() => { setIsModalOpen(true); setGeneratedLink(null); reset(); }}>
+        <Button
+          onClick={() => {
+            setIsModalOpen(true);
+            setGeneratedLink(null);
+            reset();
+          }}
+        >
           <Plus className="mr-2 h-4 w-4" /> Request Review
         </Button>
       </div>
 
-      <div className="rounded-xl border bg-card text-card-foreground shadow-sm">
+      <div className="bg-card text-card-foreground rounded-xl border shadow-sm">
         <div className="p-6">
           {loading ? (
             <div className="flex items-center justify-center py-10">
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+              <div className="border-primary h-6 w-6 animate-spin rounded-full border-2 border-t-transparent" />
             </div>
           ) : reviews.length === 0 ? (
-            <div className="text-center py-16 text-muted-foreground flex flex-col items-center">
-              <Star className="h-12 w-12 text-muted-foreground/30 mb-4" />
-              <p className="font-semibold text-foreground mb-1">No reviews yet</p>
+            <div className="text-muted-foreground flex flex-col items-center py-16 text-center">
+              <Star className="text-muted-foreground/30 mb-4 h-12 w-12" />
+              <p className="text-foreground mb-1 font-semibold">No reviews yet</p>
               <p className="text-sm">Start by sending a review request to a past traveler.</p>
             </div>
           ) : (
             <div className="divide-y">
-              {reviews.map(review => (
-                <div key={review.id} className="py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              {reviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="flex flex-col justify-between gap-4 py-5 md:flex-row md:items-center"
+                >
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-semibold text-base">{review.travelerName}</span>
-                      <span className="text-xs text-muted-foreground px-2 py-0.5 rounded bg-muted/50">
+                    <div className="mb-1 flex items-center gap-2">
+                      <span className="text-base font-semibold">{review.travelerName}</span>
+                      <span className="text-muted-foreground bg-muted/50 rounded px-2 py-0.5 text-xs">
                         {review.travelerEmail}
                       </span>
                     </div>
-                    
+
                     {review.status === 'published' ? (
                       <div className="mt-2">
-                        <div className="flex items-center gap-1 mb-1.5">
+                        <div className="mb-1.5 flex items-center gap-1">
                           {Array.from({ length: 5 }).map((_, i) => (
-                            <Star key={i} className={`h-4 w-4 ${i < review.rating ? 'fill-yellow-500 text-yellow-500' : 'fill-muted text-muted'}`} />
+                            <Star
+                              key={i}
+                              className={`h-4 w-4 ${i < review.rating ? 'fill-yellow-500 text-yellow-500' : 'fill-muted text-muted'}`}
+                            />
                           ))}
-                          <span className="text-xs font-medium ml-1 bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 px-1.5 py-0.5 rounded flex items-center gap-1">
+                          <span className="ml-1 flex items-center gap-1 rounded bg-emerald-100 px-1.5 py-0.5 text-xs font-medium text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
                             <CheckCircle2 className="h-3 w-3" /> Published
                           </span>
                         </div>
-                        <p className="text-sm text-muted-foreground max-w-2xl">{review.content}</p>
+                        <p className="text-muted-foreground max-w-2xl text-sm">{review.content}</p>
                       </div>
                     ) : (
                       <div className="mt-2 flex items-center gap-1.5">
-                        <span className="text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 px-1.5 py-0.5 rounded flex items-center gap-1">
+                        <span className="flex items-center gap-1 rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
                           <Clock className="h-3 w-3" /> Pending Review
                         </span>
-                        <span className="text-xs text-muted-foreground">Sent on {format(new Date(review.createdAt), 'MMM dd, yyyy')}</span>
+                        <span className="text-muted-foreground text-xs">
+                          Sent on {format(new Date(review.createdAt), 'MMM dd, yyyy')}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -131,22 +153,27 @@ export function ReviewsContent() {
           <DialogHeader>
             <DialogTitle>Request a Review</DialogTitle>
             <DialogDescription>
-              Generate a unique, secure link for a past traveler to verify their booking and leave a review.
+              Generate a unique, secure link for a past traveler to verify their booking and leave a
+              review.
             </DialogDescription>
           </DialogHeader>
 
           {!generatedLink ? (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-4">
               <div>
-                <label className="text-sm font-medium mb-1.5 block">Traveler Name</label>
+                <label className="mb-1.5 block text-sm font-medium">Traveler Name</label>
                 <Input placeholder="e.g. John Doe" {...register('travelerName')} />
-                {errors.travelerName && <p className="text-red-500 text-xs mt-1">{errors.travelerName.message}</p>}
+                {errors.travelerName && (
+                  <p className="mt-1 text-xs text-red-500">{errors.travelerName.message}</p>
+                )}
               </div>
-              
+
               <div>
-                <label className="text-sm font-medium mb-1.5 block">Traveler Email</label>
+                <label className="mb-1.5 block text-sm font-medium">Traveler Email</label>
                 <Input type="email" placeholder="john@example.com" {...register('travelerEmail')} />
-                {errors.travelerEmail && <p className="text-red-500 text-xs mt-1">{errors.travelerEmail.message}</p>}
+                {errors.travelerEmail && (
+                  <p className="mt-1 text-xs text-red-500">{errors.travelerEmail.message}</p>
+                )}
               </div>
 
               <div className="pt-2">
@@ -156,20 +183,25 @@ export function ReviewsContent() {
               </div>
             </form>
           ) : (
-            <div className="py-6 space-y-4 text-center">
-              <div className="mx-auto h-12 w-12 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+            <div className="space-y-4 py-6 text-center">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30">
                 <CheckCircle2 className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
               </div>
               <h3 className="text-lg font-semibold">Review Link Generated!</h3>
-              <p className="text-sm text-muted-foreground">
-                Normally this would be emailed directly to the customer. For now, you can copy the link below and send it to them manually.
+              <p className="text-muted-foreground text-sm">
+                Normally this would be emailed directly to the customer. For now, you can copy the
+                link below and send it to them manually.
               </p>
-              
-              <div className="flex items-center gap-2 mt-4 p-3 rounded-lg bg-muted border font-mono text-xs overflow-x-auto whitespace-nowrap">
+
+              <div className="bg-muted mt-4 flex items-center gap-2 overflow-x-auto whitespace-nowrap rounded-lg border p-3 font-mono text-xs">
                 {generatedLink}
               </div>
-              
-              <Button onClick={() => window.open(generatedLink, '_blank')} variant="outline" className="w-full mt-2">
+
+              <Button
+                onClick={() => window.open(generatedLink, '_blank')}
+                variant="outline"
+                className="mt-2 w-full"
+              >
                 <ExternalLink className="mr-2 h-4 w-4" /> Open Link
               </Button>
             </div>

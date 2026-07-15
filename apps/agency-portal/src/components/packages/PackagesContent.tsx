@@ -28,7 +28,10 @@ import { usePackages, useDeletePackage } from '@/hooks/useAgencyPortal';
 
 import type { PackageDTO, PackageStatus } from '@travel/types';
 
-const statusConfig: Record<PackageStatus, { label: string; variant: 'success' | 'secondary' | 'outline' | 'destructive' }> = {
+const statusConfig: Record<
+  PackageStatus,
+  { label: string; variant: 'success' | 'secondary' | 'outline' | 'destructive' }
+> = {
   active: { label: 'Active', variant: 'success' },
   draft: { label: 'Draft', variant: 'secondary' },
   inactive: { label: 'Inactive', variant: 'outline' },
@@ -44,9 +47,10 @@ export function PackagesContent() {
   const deletePackage = useDeletePackage();
 
   const packages: PackageDTO[] = data?.items ?? [];
-  const filtered = packages.filter((pkg) =>
-    pkg.name.toLowerCase().includes(search.toLowerCase()) ||
-    (pkg.destinationName ?? '').toLowerCase().includes(search.toLowerCase()),
+  const filtered = packages.filter(
+    (pkg) =>
+      pkg.name.toLowerCase().includes(search.toLowerCase()) ||
+      (pkg.destinationName ?? '').toLowerCase().includes(search.toLowerCase()),
   );
 
   const handleDelete = async (id: string) => {
@@ -73,7 +77,7 @@ export function PackagesContent() {
 
       {/* Filters Bar */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="relative flex-1 max-w-md">
+        <div className="relative max-w-md flex-1">
           <Input
             placeholder="Search packages..."
             value={search}
@@ -82,7 +86,7 @@ export function PackagesContent() {
           />
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center rounded-lg border bg-muted/50 p-0.5">
+          <div className="bg-muted/50 flex items-center rounded-lg border p-0.5">
             <button
               onClick={() => setViewMode('grid')}
               className={cn(
@@ -115,7 +119,7 @@ export function PackagesContent() {
           {Array.from({ length: 6 }).map((_, i) => (
             <Card key={i} className="overflow-hidden">
               <Skeleton className="h-40 w-full rounded-none" />
-              <CardContent className="p-4 space-y-3">
+              <CardContent className="space-y-3 p-4">
                 <Skeleton className="h-5 w-3/4" />
                 <Skeleton className="h-3 w-1/2" />
                 <Skeleton className="h-6 w-1/3" />
@@ -133,7 +137,11 @@ export function PackagesContent() {
         <EmptyState
           icon={Package}
           title="No packages found"
-          description={packages.length === 0 ? 'Create your first travel package to get started.' : 'Try adjusting your search.'}
+          description={
+            packages.length === 0
+              ? 'Create your first travel package to get started.'
+              : 'Try adjusting your search.'
+          }
           action={
             <Link href="/packages/create">
               <Button>
@@ -148,27 +156,27 @@ export function PackagesContent() {
           {filtered.map((pkg, i) => (
             <Card
               key={pkg.id}
-              className="card-hover group overflow-hidden animate-fade-in"
+              className="card-hover animate-fade-in group overflow-hidden"
               style={{ animationDelay: `${i * 60}ms` }}
             >
               {/* Cover image or placeholder */}
-              <div className="relative h-40 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5">
+              <div className="from-primary/20 via-accent/10 to-primary/5 relative h-40 bg-gradient-to-br">
                 {pkg.coverImage ? (
                   <img src={pkg.coverImage} alt={pkg.name} className="h-full w-full object-cover" />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <MapPin className="h-12 w-12 text-primary/30" />
+                    <MapPin className="text-primary/30 h-12 w-12" />
                   </div>
                 )}
                 {pkg.isFeatured && (
-                  <div className="absolute top-3 left-3">
+                  <div className="absolute left-3 top-3">
                     <Badge className="bg-accent/90 text-accent-foreground backdrop-blur-sm">
                       <Star className="mr-1 h-3 w-3" />
                       Featured
                     </Badge>
                   </div>
                 )}
-                <div className="absolute top-3 right-3">
+                <div className="absolute right-3 top-3">
                   <Badge variant={statusConfig[pkg.status]?.variant ?? 'outline'}>
                     {statusConfig[pkg.status]?.label ?? pkg.status}
                   </Badge>
@@ -187,7 +195,12 @@ export function PackagesContent() {
                       Edit
                     </Button>
                   </Link>
-                  <Button size="sm" variant="destructive" className="h-8" onClick={() => handleDelete(pkg.id)}>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    className="h-8"
+                    onClick={() => handleDelete(pkg.id)}
+                  >
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>
                 </div>
@@ -196,22 +209,24 @@ export function PackagesContent() {
               <CardContent className="p-4">
                 <div className="space-y-3">
                   <div>
-                    <h3 className="font-semibold text-foreground line-clamp-1">{pkg.name}</h3>
-                    <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                    <h3 className="text-foreground line-clamp-1 font-semibold">{pkg.name}</h3>
+                    <div className="text-muted-foreground mt-1 flex items-center gap-2 text-xs">
                       <MapPin className="h-3 w-3" />
                       <span>{pkg.destinationName ?? '—'}</span>
                       <span className="text-border">•</span>
                       <Clock className="h-3 w-3" />
-                      <span>{pkg.durationDays}D/{pkg.durationNights}N</span>
+                      <span>
+                        {pkg.durationDays}D/{pkg.durationNights}N
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1">
-                      <IndianRupee className="h-4 w-4 text-foreground" />
+                      <IndianRupee className="text-foreground h-4 w-4" />
                       <span className="text-lg font-bold">
                         {pkg.pricePerPerson.toLocaleString('en-IN')}
                       </span>
-                      <span className="text-xs text-muted-foreground">/person</span>
+                      <span className="text-muted-foreground text-xs">/person</span>
                     </div>
                     <Badge variant="outline" className="text-xs">
                       {pkg.category}
@@ -229,42 +244,51 @@ export function PackagesContent() {
             {filtered.map((pkg, i) => (
               <div
                 key={pkg.id}
-                className="flex items-center gap-4 p-4 transition-colors hover:bg-muted/50 animate-fade-in"
+                className="hover:bg-muted/50 animate-fade-in flex items-center gap-4 p-4 transition-colors"
                 style={{ animationDelay: `${i * 40}ms` }}
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary overflow-hidden">
+                <div className="bg-primary/10 text-primary flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg">
                   {pkg.coverImage ? (
-                    <img src={pkg.coverImage} alt={pkg.name} className="h-full w-full object-cover" />
+                    <img
+                      src={pkg.coverImage}
+                      alt={pkg.name}
+                      className="h-full w-full object-cover"
+                    />
                   ) : (
                     <Package className="h-5 w-5" />
                   )}
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <Link href={`/packages/${pkg.id}`} className="text-sm font-semibold truncate hover:underline">
+                    <Link
+                      href={`/packages/${pkg.id}`}
+                      className="truncate text-sm font-semibold hover:underline"
+                    >
                       {pkg.name}
                     </Link>
                     {pkg.isFeatured && (
-                      <Star className="h-3.5 w-3.5 fill-accent text-accent shrink-0" />
+                      <Star className="fill-accent text-accent h-3.5 w-3.5 shrink-0" />
                     )}
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5">
+                  <div className="text-muted-foreground mt-0.5 flex items-center gap-3 text-xs">
                     <span className="flex items-center gap-1">
                       <MapPin className="h-3 w-3" />
                       {pkg.destinationName ?? '—'}
                     </span>
-                    <span>{pkg.durationDays}D/{pkg.durationNights}N</span>
+                    <span>
+                      {pkg.durationDays}D/{pkg.durationNights}N
+                    </span>
                     <span>{pkg.category}</span>
                   </div>
                 </div>
-                <div className="hidden sm:block text-right">
+                <div className="hidden text-right sm:block">
                   <p className="text-sm font-bold">{formatCurrency(pkg.pricePerPerson)}</p>
-                  <p className="text-xs text-muted-foreground">per person</p>
+                  <p className="text-muted-foreground text-xs">per person</p>
                 </div>
                 <Badge variant={statusConfig[pkg.status]?.variant ?? 'outline'}>
                   {statusConfig[pkg.status]?.label ?? pkg.status}
                 </Badge>
-                <div className="flex items-center gap-1 shrink-0">
+                <div className="flex shrink-0 items-center gap-1">
                   <Link href={`/packages/${pkg.id}/edit`}>
                     <Button variant="ghost" size="icon">
                       <Edit className="h-4 w-4" />

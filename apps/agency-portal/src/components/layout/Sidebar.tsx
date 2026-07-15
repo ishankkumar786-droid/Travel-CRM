@@ -72,22 +72,21 @@ const BOTTOM_ITEMS = [
 export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname();
 
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(href + '/');
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 z-40 flex h-full flex-col border-r border-sidebar-border bg-sidebar transition-all duration-300 ease-in-out',
+        'border-sidebar-border bg-sidebar fixed left-0 top-0 z-40 flex h-full flex-col border-r transition-all duration-300 ease-in-out',
         collapsed ? 'w-[68px]' : 'w-[260px]',
       )}
     >
       {/* Logo / Brand */}
-      <div className="flex h-16 items-center border-b border-sidebar-border px-4">
+      <div className="border-sidebar-border flex h-16 items-center border-b px-4">
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary shadow-md shadow-sidebar-primary/25">
+          <div className="bg-sidebar-primary shadow-sidebar-primary/25 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg shadow-md">
             <svg
-              className="h-5 w-5 text-sidebar-primary-foreground"
+              className="text-sidebar-primary-foreground h-5 w-5"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="none"
@@ -106,12 +105,10 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           </div>
           {!collapsed && (
             <div className="flex flex-col overflow-hidden">
-              <span className="truncate text-sm font-bold text-sidebar-foreground">
+              <span className="text-sidebar-foreground truncate text-sm font-bold">
                 Travel Marketplace
               </span>
-              <span className="truncate text-xs text-sidebar-foreground/60">
-                Agency Portal
-              </span>
+              <span className="text-sidebar-foreground/60 truncate text-xs">Agency Portal</span>
             </div>
           )}
         </div>
@@ -129,7 +126,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   className={cn(
                     'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
                     active
-                      ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-sm shadow-sidebar-primary/20'
+                      ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-sidebar-primary/20 shadow-sm'
                       : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
                     collapsed && 'justify-center px-2',
                   )}
@@ -149,7 +146,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       </nav>
 
       {/* Bottom items */}
-      <div className="border-t border-sidebar-border px-3 py-3">
+      <div className="border-sidebar-border border-t px-3 py-3">
         <ul className="space-y-1">
           {BOTTOM_ITEMS.map((item) => {
             const active = isActive(item.href);
@@ -175,13 +172,13 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       </div>
 
       {/* Collapse toggle */}
-      <div className="border-t border-sidebar-border p-2">
+      <div className="border-sidebar-border border-t p-2">
         <Button
           variant="ghost"
           size="sm"
           onClick={onToggle}
           className={cn(
-            'w-full text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+            'text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full',
             collapsed && 'px-2',
           )}
         >
@@ -189,7 +186,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             <ChevronRight className="h-4 w-4" />
           ) : (
             <>
-              <ChevronLeft className="h-4 w-4 mr-2" />
+              <ChevronLeft className="mr-2 h-4 w-4" />
               <span>Collapse</span>
             </>
           )}

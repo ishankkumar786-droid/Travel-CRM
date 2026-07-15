@@ -68,7 +68,7 @@ function ScoreRing({
           <span className="text-sm font-bold">{score}%</span>
         </div>
       </div>
-      <span className="text-xs text-muted-foreground text-center">{label}</span>
+      <span className="text-muted-foreground text-center text-xs">{label}</span>
     </div>
   );
 }
@@ -87,17 +87,13 @@ function ChecklistItem({
   return (
     <div className="flex items-start gap-3 py-2.5">
       {completed ? (
-        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-success" />
+        <CheckCircle2 className="text-success mt-0.5 h-5 w-5 shrink-0" />
       ) : (
-        <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-warning" />
+        <AlertTriangle className="text-warning mt-0.5 h-5 w-5 shrink-0" />
       )}
       <div>
-        <p className={cn('text-sm font-medium', completed && 'text-muted-foreground')}>
-          {label}
-        </p>
-        {description && (
-          <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
-        )}
+        <p className={cn('text-sm font-medium', completed && 'text-muted-foreground')}>{label}</p>
+        {description && <p className="text-muted-foreground mt-0.5 text-xs">{description}</p>}
       </div>
     </div>
   );
@@ -152,7 +148,7 @@ export function MarketplaceContent() {
         <Card className="lg:col-span-2">
           <CardContent className="p-0">
             {/* Banner */}
-            <div className="relative h-40 rounded-t-lg bg-gradient-to-br from-primary/30 via-accent/20 to-primary/10">
+            <div className="from-primary/30 via-accent/20 to-primary/10 relative h-40 rounded-t-lg bg-gradient-to-br">
               <Button
                 size="sm"
                 variant="secondary"
@@ -165,17 +161,17 @@ export function MarketplaceContent() {
 
             {/* Agency Info */}
             <div className="relative px-6 pb-6">
-              <div className="flex flex-col sm:flex-row sm:items-end gap-4 -mt-10">
+              <div className="-mt-10 flex flex-col gap-4 sm:flex-row sm:items-end">
                 {/* Logo */}
-                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl border-4 border-background bg-primary text-2xl font-bold text-primary-foreground shadow-lg">
+                <div className="border-background bg-primary text-primary-foreground flex h-20 w-20 shrink-0 items-center justify-center rounded-xl border-4 text-2xl font-bold shadow-lg">
                   TM
                 </div>
                 <div className="flex-1 pt-2">
                   <div className="flex items-center gap-2">
                     <h2 className="text-xl font-bold">Travel Masters India</h2>
-                    <ShieldCheck className="h-5 w-5 text-success" />
+                    <ShieldCheck className="text-success h-5 w-5" />
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Premium travel agency specializing in luxury and adventure tours across India
                   </p>
                 </div>
@@ -191,7 +187,7 @@ export function MarketplaceContent() {
                 ].map((stat) => (
                   <div key={stat.label} className="text-center">
                     <p className="text-lg font-bold">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground">{stat.label}</p>
+                    <p className="text-muted-foreground text-xs">{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -217,7 +213,7 @@ export function MarketplaceContent() {
                 ].map(({ icon: Icon, label }) => (
                   <button
                     key={label}
-                    className="flex h-9 w-9 items-center justify-center rounded-lg border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                    className="text-muted-foreground hover:bg-muted hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg border transition-colors"
                     title={label}
                   >
                     <Icon className="h-4 w-4" />
@@ -266,20 +262,28 @@ export function MarketplaceContent() {
         <CardContent>
           <div className="grid gap-4 sm:grid-cols-3">
             {[
-              { title: 'IATA Certified', icon: Award, description: 'International Air Transport Association' },
-              { title: 'Verified Agency', icon: ShieldCheck, description: 'Travel Marketplace Verified' },
+              {
+                title: 'IATA Certified',
+                icon: Award,
+                description: 'International Air Transport Association',
+              },
+              {
+                title: 'Verified Agency',
+                icon: ShieldCheck,
+                description: 'Travel Marketplace Verified',
+              },
               { title: 'Top Rated 2025', icon: Star, description: 'Top 10 Agencies in India' },
             ].map((item) => (
               <div
                 key={item.title}
-                className="flex items-center gap-3 rounded-lg border p-4 transition-colors hover:bg-muted/50"
+                className="hover:bg-muted/50 flex items-center gap-3 rounded-lg border p-4 transition-colors"
               >
-                <div className="rounded-lg bg-accent/10 p-2.5 text-accent">
+                <div className="bg-accent/10 text-accent rounded-lg p-2.5">
                   <item.icon className="h-5 w-5" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">{item.description}</p>
+                  <p className="text-muted-foreground text-xs">{item.description}</p>
                 </div>
               </div>
             ))}

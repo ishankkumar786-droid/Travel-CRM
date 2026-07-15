@@ -11,17 +11,13 @@ import { cn } from '@/lib/utils';
  * Layout for all authenticated pages.
  * Wraps children with auth guard, sidebar, and header.
  */
-export default function DashboardGroupLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DashboardGroupLayout({ children }: { children: React.ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <AuthGuard>
-      <div className="min-h-screen bg-background">
+      <div className="bg-background min-h-screen">
         {/* Mobile overlay */}
         {mobileOpen && (
           <div
@@ -41,14 +37,11 @@ export default function DashboardGroupLayout({
         {/* Sidebar — mobile (slide-in) */}
         <div
           className={cn(
-            'fixed inset-y-0 left-0 z-40 block lg:hidden transition-transform duration-300',
+            'fixed inset-y-0 left-0 z-40 block transition-transform duration-300 lg:hidden',
             mobileOpen ? 'translate-x-0' : '-translate-x-full',
           )}
         >
-          <Sidebar
-            collapsed={false}
-            onToggle={() => setMobileOpen(false)}
-          />
+          <Sidebar collapsed={false} onToggle={() => setMobileOpen(false)} />
         </div>
 
         {/* Main content area */}
@@ -60,9 +53,7 @@ export default function DashboardGroupLayout({
         >
           <Header onMobileMenuToggle={() => setMobileOpen(!mobileOpen)} />
 
-          <main className="flex-1 p-4 lg:p-6">
-            {children}
-          </main>
+          <main className="flex-1 p-4 lg:p-6">{children}</main>
         </div>
       </div>
     </AuthGuard>
